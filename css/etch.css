@@ -1,0 +1,22 @@
+.container {
+    border: rgb(211, 13, 13) solid 5px;
+    height: 600px;
+    width: 600px;
+    display: flex;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    border: rgb(0, 139, 23) solid 1px;
+    flex: 1 auto;
+}
+
+.cell {
+   border: rgb(122, 52, 219) solid 1px;
+    flex: 1 auto;
+}
+
+/* .cell:hover {
+    background-color: pink;
+} */
