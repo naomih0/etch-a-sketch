@@ -78,23 +78,23 @@ function changeColor(event) {
     let a = ((Math.random() * 1).toFixed(1));
 
     let rgba = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-    event.target.style.backgroundColor = 'black';
+    event.target.style.backgroundColor = rgba;
 };
 
 function updateCellsForColor() {
     const cellColor = document.querySelectorAll('.cell');
+    let isDragging = false;
 
     function handleMouseEvent(event) {
 
         if (event.type === 'mousedown') {
+            isDragging = true;
             changeColor(event);
         } 
-
-        else if (event.type === 'mouseover' && event.buttons === 1) {
-            changeColor(event);
-        } 
-
-        else if (event.type === 'click') {
+        else if (event.type === 'mouseup') {
+            isDragging = false;
+        }
+        else if (event.type === 'mouseover' && isDragging) {
             changeColor(event);
         };
     };
@@ -102,7 +102,7 @@ function updateCellsForColor() {
     cellColor.forEach(cell => {
         cell.addEventListener('mousedown', handleMouseEvent);
         cell.addEventListener('mouseover', handleMouseEvent);
-        cell.addEventListener('click', handleMouseEvent);
+        cell.addEventListener('mouseup', handleMouseEvent);
     });
 };
 
