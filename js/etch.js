@@ -83,7 +83,31 @@ function changeColor(event) {
 
 function updateCellsForColor() {
     const cellColor = document.querySelectorAll('.cell');
+    let isDragging = false;
+
+    function handleMouseDown() {
+        isDragging = true;
+    }
+    function handleMouseUp() {
+        isDragging = false;
+    }
+
+    function handleMouseOver(event) {
+        if (isDragging) {
+            changeColor(event);
+        }
+    }
+
+    function handleClick(event) {
+        changeColor(event);
+    }
+
     cellColor.forEach(cell => {
-        cell.addEventListener('mouseover', changeColor);
+        cell.addEventListener('mousedown', handleMouseDown);
+        cell.addEventListener('mouseup', handleMouseUp);
+        cell.addEventListener('mouseover', handleMouseOver);
+        cell.addEventListener('click', handleClick);
     });
 };
+
+updateCellsForColor();
