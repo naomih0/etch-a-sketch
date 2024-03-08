@@ -78,35 +78,31 @@ function changeColor(event) {
     let a = ((Math.random() * 1).toFixed(1));
 
     let rgba = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-    event.target.style.backgroundColor = rgba;
+    event.target.style.backgroundColor = 'black';
 };
 
 function updateCellsForColor() {
     const cellColor = document.querySelectorAll('.cell');
-    let isDragging = false;
 
-    function handleMouseDown() {
-        isDragging = true;
-    }
-    function handleMouseUp() {
-        isDragging = false;
-    }
+    function handleMouseEvent(event) {
 
-    function handleMouseOver(event) {
-        if (isDragging) {
+        if (event.type === 'mousedown') {
             changeColor(event);
-        }
-    }
+        } 
 
-    function handleClick(event) {
-        changeColor(event);
-    }
+        else if (event.type === 'mouseover' && event.buttons === 1) {
+            changeColor(event);
+        } 
+
+        else if (event.type === 'click') {
+            changeColor(event);
+        };
+    };
 
     cellColor.forEach(cell => {
-        cell.addEventListener('mousedown', handleMouseDown);
-        cell.addEventListener('mouseup', handleMouseUp);
-        cell.addEventListener('mouseover', handleMouseOver);
-        cell.addEventListener('click', handleClick);
+        cell.addEventListener('mousedown', handleMouseEvent);
+        cell.addEventListener('mouseover', handleMouseEvent);
+        cell.addEventListener('click', handleMouseEvent);
     });
 };
 
