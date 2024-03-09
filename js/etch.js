@@ -1,5 +1,17 @@
 const grid = document.querySelector('.container');
 
+const colorFunctions = {
+    rainbow: rainbowColor,
+    grayscale: grayscaleColor,
+    eraser: eraseColor,
+    color: choiceColor, 
+}; 
+
+let lastClickButton = null;
+function handleButtonClick(colorFunction) {
+    lastClickButton = colorFunction;
+};
+
 function checkNumber(num) {
     if (num >= 101) {
         alert('Too big.....Pick a number between 0-100');
@@ -46,7 +58,6 @@ function createGrid(num) {
                 row.appendChild(cell);
             };
         };
-        updateCellsForColor();
     }
 
     else {
@@ -65,13 +76,21 @@ gridButton.addEventListener('click', pickGridNumber);
 function pickGridNumber(event) {
    let pick = prompt('Pick a Number between 0-100!');
    createGrid(pick);
+   
+   if (lastClickButton) {
+    updateCellsForColor(lastClickButton);
+   }    
+
+   else {
+    updateCellsForColor(colorFunctions.rainbow);
+   };
 };
 
 function randomColor() {
     return Math.floor(Math.random() * 256);
 }
 
-function changeColor(event) {
+function rainbowColor(event) {
     let r = randomColor();
     let g = randomColor();
     let b = randomColor();
@@ -81,7 +100,89 @@ function changeColor(event) {
     event.target.style.backgroundColor = rgba;
 };
 
-function updateCellsForColor() {
+function grayscaleColor(event) {
+    let randomValue = randomColor();
+
+    let rgba = 'rgba(' + randomValue + ',' + randomValue + ',' + randomValue + ', 1)'; 
+    event.target.style.backgroundColor = rgba;
+};
+
+function eraseColor(event) {
+    event.target.style.backgroundColor = '';
+};
+
+let brushColor;
+function choiceColor(event) {
+    event.target.style.backgroundColor = brushColor;
+};
+
+function brushColors(event) {
+    const colorClasses = ['color-one', 'color-two', 'color-three', 'color-four', 'color-five', 
+    'color-six', 'color-seven', 'color-eight', 'color-nine', 'color-ten'];
+
+    const color = window.getComputedStyle(event.target).backgroundColor;
+
+    for (let i = 0; i < colorClasses.length; i++) {
+
+        if (event.target.classList.contains(colorClasses[i])) {
+            brushColor = color;
+            break;
+        };
+    };
+};
+
+
+document.querySelector(".color-one").addEventListener("click", brushColors);
+document.querySelector(".color-two").addEventListener("click", brushColors);
+document.querySelector(".color-three").addEventListener("click", brushColors);
+document.querySelector(".color-four").addEventListener("click", brushColors);
+document.querySelector(".color-five").addEventListener("click", brushColors);
+document.querySelector(".color-six").addEventListener("click", brushColors);
+document.querySelector(".color-seven").addEventListener("click", brushColors);
+document.querySelector(".color-eight").addEventListener("click", brushColors);
+document.querySelector(".color-nine").addEventListener("click", brushColors);
+document.querySelector(".color-ten").addEventListener("click", brushColors);
+
+
+function createColorButton(name) {
+
+    const button = document.createElement('button');
+    button.textContent = name;
+    button.id = name.toLowerCase() + '-button'; 
+    document.body.appendChild(button);
+}
+
+const buttonNames = ['Rainbow', 'Color', 'Grayscale', 'Eraser'];
+buttonNames.forEach(name => {
+    createColorButton(name);  
+});
+
+const rainbowButton = document.getElementById('rainbow-button');
+const greyscaleButton = document.getElementById('grayscale-button');
+const eraserButton = document.getElementById('eraser-button');
+const colorButton = document.getElementById('color-button');
+
+rainbowButton.addEventListener('click', function() {
+    updateCellsForColor(colorFunctions.rainbow);
+    handleButtonClick(colorFunctions.rainbow);
+});
+
+greyscaleButton.addEventListener('click', function() {
+    updateCellsForColor(colorFunctions.grayscale);
+    handleButtonClick(colorFunctions.grayscale);
+});
+
+eraserButton.addEventListener('click', function() {
+    updateCellsForColor(colorFunctions.eraser);
+    handleButtonClick(colorFunctions.eraser);
+});
+
+colorButton.addEventListener('click', function() {
+    updateCellsForColor(colorFunctions.color);
+    handleButtonClick(colorFunctions.color);
+});
+
+function updateCellsForColor(colorFunction) {
     const cellColor = document.querySelectorAll('.cell');
     let isDragging = false;
 
@@ -89,13 +190,15 @@ function updateCellsForColor() {
 
         if (event.type === 'mousedown') {
             isDragging = true;
-            changeColor(event);
+            colorFunction(event);
         } 
+
         else if (event.type === 'mouseup') {
             isDragging = false;
         }
+        
         else if (event.type === 'mouseover' && isDragging) {
-            changeColor(event);
+            colorFunction(event);
         };
     };
 
@@ -106,4 +209,4 @@ function updateCellsForColor() {
     });
 };
 
-updateCellsForColor();
+updateCellsForColor(colorFunctions.rainbow);

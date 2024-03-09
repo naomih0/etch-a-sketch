@@ -5,14 +5,64 @@
     display: flex;
 }
 
-.row {
+.row, .row-color-box {
     display: flex;
     flex-direction: column;
     flex: 1 auto;
 }
 
-.cell {
-    border: rgb(0, 0, 0) solid 1px;
+.cell, .cell-color-box {
+    border: rgba(0, 0, 0) solid 1px;
     flex: 1 auto;
 }
 
+body {
+   /* background-color: rgb(188, 188, 188); */
+}
+
+.color-box {
+    border: rgb(0, 0, 0) solid 2px;
+    display: flex;
+    height: 80px;
+    width: 180px;
+}
+
+.color-one {
+    background-color: red;
+}
+
+.color-two {
+    background-color: orange;
+}
+
+.color-three {
+    background-color: yellow;
+}
+
+.color-four {
+    background-color: green;
+}
+
+.color-five {
+    background-color: blue;
+}
+
+.color-six {
+    background-color: purple;
+}
+
+.color-seven {
+    background-color: pink;
+}
+
+.color-eight {
+    background-color: gray;
+}
+
+.color-nine {
+    background-color: black;
+}
+
+.color-ten {
+    background-color: white;
+}
