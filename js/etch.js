@@ -94,7 +94,7 @@ function rainbowColor(event) {
     let r = randomColor();
     let g = randomColor();
     let b = randomColor();
-    let a = ((Math.random() * 1).toFixed(1));
+    let a = 1;
 
     let rgba = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
     event.target.style.backgroundColor = rgba;
@@ -131,7 +131,6 @@ function brushColors(event) {
     };
 };
 
-
 document.querySelector(".color-one").addEventListener("click", brushColors);
 document.querySelector(".color-two").addEventListener("click", brushColors);
 document.querySelector(".color-three").addEventListener("click", brushColors);
@@ -143,6 +142,32 @@ document.querySelector(".color-eight").addEventListener("click", brushColors);
 document.querySelector(".color-nine").addEventListener("click", brushColors);
 document.querySelector(".color-ten").addEventListener("click", brushColors);
 
+function clearScreen() {
+    let cells = grid.querySelectorAll('.cell');
+
+    cells.forEach(function(cell) {
+        cell.style.backgroundColor = '';
+    });
+};
+
+const computedBorderStyle = window.getComputedStyle(document.querySelector('.cell')).border;
+function toggleGrid() {
+    let cells = grid.querySelectorAll('.cell');
+
+    cells.forEach(function(cell) {
+
+        if (cell.style.border === 'none') {
+            cell.style.border = computedBorderStyle;
+        } 
+        else {
+            cell.style.border = 'none';
+        };
+    });
+};
+
+function pickBackgroundColor() {
+    grid.style.backgroundColor = brushColor;
+};
 
 function createColorButton(name) {
 
@@ -152,7 +177,7 @@ function createColorButton(name) {
     document.body.appendChild(button);
 }
 
-const buttonNames = ['Rainbow', 'Color', 'Grayscale', 'Eraser'];
+const buttonNames = ['Rainbow', 'Color', 'Grayscale', 'Eraser', 'Clear', 'Toggle-Grid', 'Bg-Color'];
 buttonNames.forEach(name => {
     createColorButton(name);  
 });
@@ -161,6 +186,10 @@ const rainbowButton = document.getElementById('rainbow-button');
 const greyscaleButton = document.getElementById('grayscale-button');
 const eraserButton = document.getElementById('eraser-button');
 const colorButton = document.getElementById('color-button');
+
+const clearButton = document.getElementById('clear-button');
+const toggleGridButton = document.getElementById('toggle-grid-button');
+const bgColorButton = document.getElementById('bg-color-button');
 
 rainbowButton.addEventListener('click', function() {
     updateCellsForColor(colorFunctions.rainbow);
@@ -182,6 +211,18 @@ colorButton.addEventListener('click', function() {
     handleButtonClick(colorFunctions.color);
 });
 
+clearButton.addEventListener('click', function() {
+    clearScreen();
+});
+
+toggleGridButton.addEventListener('click', function() {
+    toggleGrid();
+});
+
+bgColorButton.addEventListener('click', function() {
+    pickBackgroundColor();
+});
+
 function updateCellsForColor(colorFunction) {
     const cellColor = document.querySelectorAll('.cell');
     let isDragging = false;
@@ -196,7 +237,7 @@ function updateCellsForColor(colorFunction) {
         else if (event.type === 'mouseup') {
             isDragging = false;
         }
-        
+
         else if (event.type === 'mouseover' && isDragging) {
             colorFunction(event);
         };

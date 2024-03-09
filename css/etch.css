@@ -3,6 +3,7 @@
     height: 600px;
     width: 600px;
     display: flex;
+    background-color: rgb(100, 98, 98);
 }
 
 .row, .row-color-box {
@@ -14,10 +15,6 @@
 .cell, .cell-color-box {
     border: rgba(0, 0, 0) solid 1px;
     flex: 1 auto;
-}
-
-body {
-   /* background-color: rgb(188, 188, 188); */
 }
 
 .color-box {
