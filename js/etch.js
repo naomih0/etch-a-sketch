@@ -287,10 +287,9 @@ function updateCellsForColor(colorFunction) {
     };
     
     cellColor.forEach(cell => {
-
-        cell.addEventListener('touchstart', handleTouchEvent);
-        cell.addEventListener('touchend', handleTouchEvent);
-        cell.addEventListener('touchmove', handleTouchEvent);
+        cell.addEventListener('mousedown', handleMouseEvent);
+        cell.addEventListener('mouseover', handleMouseEvent);
+        cell.addEventListener('mouseup', handleMouseEvent);
     });
 };
 
