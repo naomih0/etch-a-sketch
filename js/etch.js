@@ -291,7 +291,7 @@ function updateCellsForColor(colorFunction) {
 
         if (event.type === 'touchstart') {
             isDragging = true;
-            colorFunction(event.touches[0]); 
+            colorFunction(event.touches); 
         } 
 
         else if (event.type === 'touchend') {
@@ -299,7 +299,7 @@ function updateCellsForColor(colorFunction) {
         } 
 
         else if (event.type === 'touchmove' && isDragging) {
-            colorFunction(event.touches[0]); 
+            colorFunction(event.touches); 
         };
     };
 
