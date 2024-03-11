@@ -1,9 +1,30 @@
-.container {
-    border: rgb(0, 0, 0) solid 2px;
-    height: 600px;
-    width: 600px;
+* {
+    font-family:  monospace, sans-serif;
+}
+
+main {
     display: flex;
-    background-color: rgb(100, 98, 98);
+    border: black 1px solid;
+    background-color: #f0f0f0;
+    padding: 20px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+body {
+    background-color: #cbcbcb;
+    margin: 0px 20px;
+    padding: 0;
+}
+
+.container {
+    border: rgb(0, 0, 0) solid 1px;
+    height: 500px;
+    width: 500px;
+    display: flex;
+    background-color: #eef7f6;
 }
 
 .row, .row-color-box {
@@ -13,53 +34,326 @@
 }
 
 .cell, .cell-color-box {
-    border: rgba(0, 0, 0) solid 1px;
+    border: black solid .5px;
     flex: 1 auto;
 }
 
-.color-box {
-    border: rgb(0, 0, 0) solid 2px;
+.one {
     display: flex;
-    height: 80px;
-    width: 180px;
+    justify-content: center;
+    align-items: center;
+}
+
+.two {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bubble3, .bubble2, .bubble1 {
+    display: flex;
+    margin: 25px 0px;
+    border-radius: 5px;
+    width: 450px;
+}
+
+.bubble3 {
+    flex-direction: column;
+    align-items: center;
+}
+
+
+button {
+    border: none;
+    padding: 10px 20px;
+    margin: 0px 10px;
+    background-color: #cbcbcb;
+    color: black;
+    cursor: pointer;
+    width: 130px;
+    border: black 1px solid;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #c0bfbf;
+    box-shadow: inset 0px 0px 0px 2px rgb(18, 255, 255);
+}
+
+button.clicked {
+    box-shadow: inset 0px 0px 0px 2px rgb(18, 255, 255);
+    background-color: #c0bfbf;
+  }
+
+.color-box {
+    border: black solid 1px;
+    display: flex;
+    height: 100px;
+    width: 280px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.color-box-container {
+    order: 1;
 }
 
 .color-one {
-    background-color: red;
+    background-color: #E35259;
 }
 
 .color-two {
-    background-color: orange;
+    background-color: #F97189;
 }
 
 .color-three {
-    background-color: yellow;
+    background-color: #F0B267;
 }
 
 .color-four {
-    background-color: green;
+    background-color: #74B3A2;
 }
 
 .color-five {
-    background-color: blue;
+    background-color: #6EA1DA;
 }
 
 .color-six {
-    background-color: purple;
+    background-color: #9F67F0;
 }
 
 .color-seven {
-    background-color: pink;
+    background-color: #DF76A1;
 }
 
 .color-eight {
-    background-color: gray;
+    background-color: #F6CADB;
 }
 
 .color-nine {
-    background-color: black;
+    background-color: #36494e;
 }
 
 .color-ten {
-    background-color: white;
+    background-color: #eef7f6;
+}
+
+.color-one:hover, 
+.color-two:hover, 
+.color-three:hover, 
+.color-four:hover, 
+.color-five:hover, 
+.color-six:hover, 
+.color-seven:hover, 
+.color-eight:hover, 
+.color-nine:hover, 
+.color-ten:hover {
+    box-shadow: inset 0px 0px 0px 2px rgb(18, 255, 255);
+} 
+
+.color-one.clicked, 
+.color-two.clicked, 
+.color-three.clicked, 
+.color-four.clicked, 
+.color-five.clicked, 
+.color-six.clicked, 
+.color-seven.clicked, 
+.color-eight.clicked, 
+.color-nine.clicked, 
+.color-ten.clicked {
+    box-shadow: inset 0px 0px 0px 2px rgb(18, 255, 255);
+} 
+
+h2 {
+    font-size: 26px;
+    border: black solid 1px;
+    padding: 10px 25px;
+    margin: 12px;
+    background-color: #f0f0f0;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+h4 {
+    font-size: 24px;
+    margin: 0;
+}
+
+hr {
+    border-color: black;
+    width: 100%;
+    height: 0px;
+    border-width: .9px;
+    margin: 18px 0px;
+}
+
+footer {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    padding: 8px;
+}
+
+a { 
+    margin-left: 8px;
+}
+
+@media screen and (max-width: 1250px) {
+    .two {
+        margin-left: 50px;
+    }
+}
+
+@media screen and (max-width: 1160px) {
+    .two {
+        margin-left: 40px;
+    }
+
+    .container {
+        height: 480px;
+        width: 480px;
+    }
+
+    .bubble3, .bubble2, .bubble1 {
+        width: 430px;
+    }
+
+    button {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 995px) {
+    .container {
+        height: 420px;
+        width: 420px;
+    }
+
+    .bubble3, .bubble2, .bubble1 {
+        width: 380px;
+        margin: 20px 0px;
+    }
+
+    button {
+        font-size: 12px;
+    }
+
+    h4 {
+        font-size: 22px;
+    }
+
+    hr {
+        margin: 15px 0px;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .two {
+        margin-left: 30px;
+    }
+    .bubble3, .bubble2, .bubble1 {
+        width: 360px;
+        margin: 15px 0px;
+    }
+
+    h4 {
+        font-size: 20px;
+    }
+
+    hr {
+        margin: 12px 0px;
+    
+}}
+
+
+@media screen and (max-width: 859px) {
+
+    .container {
+        height: 400px;
+        width: 400px;
+    }
+
+    .bubble3, .bubble2, .bubble1 {
+        width: 230px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 10px 0px;
+    }
+    .bubble3-button-box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    hr {
+        margin: 10px 0px;
+    }
+    
+    .color-box {
+        height: 80px;
+        width: 220px;
+    }
+
+    button {
+        margin: 2px 0px;
+    }
+
+    main {
+        height: 550px;
+    }
+}
+
+@media screen and (max-width: 713px) {
+    .two {
+        margin-left: 20px;
+    }
+    main {
+        flex-direction: column;
+    }
+    .two {
+        margin-top: 20px;
+    }
+
+    .color-box {
+        height: 90px;
+        width: 280px;
+    }
+
+    main {
+        height: auto;
+    }
+
+}
+
+@media screen and (max-width: 446px) {
+    .container {
+        height: 299px;
+        width: 299px;
+    }
+    .color-box {
+        height: 80px;
+        width: 220px;
+    }
+
+    .two {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 349px) {
+    .container {
+        height: 190px;
+        width: 190px;
+    }
+    .color-box {
+        height: 80px;
+        width: 180px;
+    }
 }

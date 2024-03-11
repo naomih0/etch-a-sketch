@@ -1,5 +1,10 @@
 const grid = document.querySelector('.container');
 
+const section2 = document.querySelector(".two");
+const bubble1 = document.querySelector(".bubble1");
+const bubble2 = document.querySelector(".bubble2");
+const bubble3Box = document.querySelector(".bubble3-button-box");
+
 const colorFunctions = {
     rainbow: rainbowColor,
     grayscale: grayscaleColor,
@@ -65,11 +70,11 @@ function createGrid(num) {
     };
 };
 
-createGrid(6);
+createGrid(8);
 
 const gridButton = document.createElement('button');
-gridButton.textContent = 'Create New Grid Size';
-document.body.appendChild(gridButton);
+gridButton.textContent = 'New Grid';
+bubble1.appendChild(gridButton);
 
 gridButton.addEventListener('click', pickGridNumber);
 
@@ -111,7 +116,7 @@ function eraseColor(event) {
     event.target.style.backgroundColor = '';
 };
 
-let brushColor;
+let brushColor = 'red';
 function choiceColor(event) {
     event.target.style.backgroundColor = brushColor;
 };
@@ -129,6 +134,12 @@ function brushColors(event) {
             break;
         };
     };
+
+    colorClasses.forEach(function(colorClass) {
+        document.querySelector("." + colorClass).classList.remove("clicked");
+    });
+
+    event.target.classList.add("clicked");
 };
 
 document.querySelector(".color-one").addEventListener("click", brushColors);
@@ -141,6 +152,8 @@ document.querySelector(".color-seven").addEventListener("click", brushColors);
 document.querySelector(".color-eight").addEventListener("click", brushColors);
 document.querySelector(".color-nine").addEventListener("click", brushColors);
 document.querySelector(".color-ten").addEventListener("click", brushColors);
+
+document.querySelector(".color-one").classList.add("clicked");
 
 function clearScreen() {
     let cells = grid.querySelectorAll('.cell');
@@ -169,18 +182,31 @@ function pickBackgroundColor() {
     grid.style.backgroundColor = brushColor;
 };
 
-function createColorButton(name) {
+function createColorButton(name, parentDiv = section2) {
 
     const button = document.createElement('button');
     button.textContent = name;
     button.id = name.toLowerCase() + '-button'; 
-    document.body.appendChild(button);
-}
+    parentDiv.appendChild(button);
+};
 
-const buttonNames = ['Rainbow', 'Color', 'Grayscale', 'Eraser', 'Clear', 'Toggle-Grid', 'Bg-Color'];
+
+const buttonNames = ['Clear', 'Toggle-Grid', 'Rainbow', 'Grayscale', 'Eraser', 'Color', 'Bg-Color'];
 buttonNames.forEach(name => {
-    createColorButton(name);  
+    if (name === 'Clear' || name === 'Toggle-Grid') {
+        createColorButton(name, bubble1); 
+    } 
+    else if (name === 'Rainbow' || name === 'Grayscale' || name === 'Eraser') {
+        createColorButton(name, bubble2); 
+    }
+    else if (name === 'Color' || name === 'Bg-Color') {
+        createColorButton(name, bubble3Box); 
+    }
+    else {
+        createColorButton(name);  
+}
 });
+
 
 const rainbowButton = document.getElementById('rainbow-button');
 const greyscaleButton = document.getElementById('grayscale-button');
@@ -191,24 +217,41 @@ const clearButton = document.getElementById('clear-button');
 const toggleGridButton = document.getElementById('toggle-grid-button');
 const bgColorButton = document.getElementById('bg-color-button');
 
+function removeClickedClassFromAll() {
+    rainbowButton.classList.remove("clicked");
+    greyscaleButton.classList.remove("clicked");
+    eraserButton.classList.remove("clicked");
+    colorButton.classList.remove("clicked");
+}
+
 rainbowButton.addEventListener('click', function() {
     updateCellsForColor(colorFunctions.rainbow);
     handleButtonClick(colorFunctions.rainbow);
+    removeClickedClassFromAll();
+    this.classList.toggle("clicked");
 });
+
+rainbowButton.classList.add("clicked");
 
 greyscaleButton.addEventListener('click', function() {
     updateCellsForColor(colorFunctions.grayscale);
     handleButtonClick(colorFunctions.grayscale);
+    removeClickedClassFromAll();
+    this.classList.toggle("clicked");
 });
 
 eraserButton.addEventListener('click', function() {
     updateCellsForColor(colorFunctions.eraser);
     handleButtonClick(colorFunctions.eraser);
+    removeClickedClassFromAll();
+    this.classList.toggle("clicked");
 });
 
 colorButton.addEventListener('click', function() {
     updateCellsForColor(colorFunctions.color);
     handleButtonClick(colorFunctions.color);
+    removeClickedClassFromAll();
+    this.classList.toggle("clicked");
 });
 
 clearButton.addEventListener('click', function() {
