@@ -286,10 +286,31 @@ function updateCellsForColor(colorFunction) {
         };
     };
 
+    function handleTouchEvent(event) {
+        event.preventDefault(); 
+
+        if (event.type === 'touchstart') {
+            isDragging = true;
+            colorFunction(event.touches[0]); 
+        } 
+
+        else if (event.type === 'touchend') {
+            isDragging = false;
+        } 
+
+        else if (event.type === 'touchmove' && isDragging) {
+            colorFunction(event.touches[0]); 
+        };
+    };
+
     cellColor.forEach(cell => {
         cell.addEventListener('mousedown', handleMouseEvent);
         cell.addEventListener('mouseover', handleMouseEvent);
         cell.addEventListener('mouseup', handleMouseEvent);
+
+        cell.addEventListener('touchstart', handleTouchEvent);
+        cell.addEventListener('touchend', handleTouchEvent);
+        cell.addEventListener('touchmove', handleTouchEvent);
     });
 };
 
