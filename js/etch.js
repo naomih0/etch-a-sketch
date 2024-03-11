@@ -285,37 +285,8 @@ function updateCellsForColor(colorFunction) {
             colorFunction(event);
         };
     };
-
-    function handleTouchEvent(event) {
-        event.preventDefault(); 
-    
-        if (event.type === 'touchstart') {
-            isDragging = true;
-            lastColoredCell = event.target; 
-            colorFunction(event.target); 
-        } 
-        
-        else if ((event.type === 'touchmove' || event.type === 'touchend') && isDragging) {
-
-            const touchX = event.touches[0].clientX;
-            const touchY = event.touches[0].clientY;
-            const touchedCell = document.elementFromPoint(touchX, touchY);
-    
-            if (touchedCell !== lastColoredCell) {
-                colorFunction(touchedCell); 
-                lastColoredCell = touchedCell; 
-            };
-        }
-
-        else if (event.type === 'touchend') {
-            isDragging = false;
-        };
-    };
     
     cellColor.forEach(cell => {
-        cell.addEventListener('mousedown', handleMouseEvent);
-        cell.addEventListener('mouseover', handleMouseEvent);
-        cell.addEventListener('mouseup', handleMouseEvent);
 
         cell.addEventListener('touchstart', handleTouchEvent);
         cell.addEventListener('touchend', handleTouchEvent);
