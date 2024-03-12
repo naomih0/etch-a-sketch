@@ -5,6 +5,7 @@ const bubble1 = document.querySelector(".bubble1");
 const bubble2 = document.querySelector(".bubble2");
 const bubble3Box = document.querySelector(".bubble3-button-box");
 
+// Object mapping color brush functions
 const colorFunctions = {
     rainbow: rainbowColor,
     grayscale: grayscaleColor,
@@ -12,11 +13,13 @@ const colorFunctions = {
     color: choiceColor, 
 }; 
 
+// Stores the last clicked color button function for new grid creation
 let lastClickButton = null;
 function handleButtonClick(colorFunction) {
     lastClickButton = colorFunction;
 };
 
+// Checks if new grid number is between 0-100
 function checkNumber(num) {
     if (num >= 101) {
         alert('Too big.....Pick a number between 0-100');
@@ -29,6 +32,7 @@ function checkNumber(num) {
     }
 
     else {
+        // If yes, then removes old grid so new grid can replace
         let removeRow = document.querySelectorAll('.row');
         let removeCell = document.querySelectorAll('.cell');
 
@@ -70,24 +74,27 @@ function createGrid(num) {
     };
 };
 
-createGrid(8);
+createGrid(8); // Creates the default grid
 
+// Creates the New Grid button
 const gridButton = document.createElement('button');
 gridButton.textContent = 'New Grid';
 bubble1.appendChild(gridButton);
 
 gridButton.addEventListener('click', pickGridNumber);
 
+
 function pickGridNumber(event) {
    let pick = prompt('Pick a Number between 0-100!');
    createGrid(pick);
    
+   // Gets the last click button for new grid 
    if (lastClickButton) {
     updateCellsForColor(lastClickButton);
    }    
 
    else {
-    updateCellsForColor(colorFunctions.rainbow);
+    updateCellsForColor(colorFunctions.rainbow); // defaults at rainbow brush
    };
 };
 
@@ -121,27 +128,31 @@ function choiceColor(event) {
     event.target.style.backgroundColor = brushColor;
 };
 
+// Function to handle brush colors based on the clicked color tile
 function brushColors(event) {
     const colorClasses = ['color-one', 'color-two', 'color-three', 'color-four', 'color-five', 
     'color-six', 'color-seven', 'color-eight', 'color-nine', 'color-ten'];
 
+    // Get the background color of the clicked tile
     const color = window.getComputedStyle(event.target).backgroundColor;
 
     for (let i = 0; i < colorClasses.length; i++) {
 
         if (event.target.classList.contains(colorClasses[i])) {
-            brushColor = color;
+            brushColor = color;  // If the clicked tile matches a color class, set brushColor to its color
             break;
         };
     };
 
+    // For css styling (only one color can be selected for this css style at a time)
     colorClasses.forEach(function(colorClass) {
         document.querySelector("." + colorClass).classList.remove("clicked");
     });
 
-    event.target.classList.add("clicked");
+    event.target.classList.add("clicked"); 
 };
 
+// Event listeners to trigger brushColors function when color tiles are clicked
 document.querySelector(".color-one").addEventListener("click", brushColors);
 document.querySelector(".color-two").addEventListener("click", brushColors);
 document.querySelector(".color-three").addEventListener("click", brushColors);
@@ -153,7 +164,7 @@ document.querySelector(".color-eight").addEventListener("click", brushColors);
 document.querySelector(".color-nine").addEventListener("click", brushColors);
 document.querySelector(".color-ten").addEventListener("click", brushColors);
 
-document.querySelector(".color-one").classList.add("clicked");
+document.querySelector(".color-one").classList.add("clicked"); // For css styling (Default)
 
 function clearScreen() {
     let cells = grid.querySelectorAll('.cell');
@@ -163,7 +174,7 @@ function clearScreen() {
     });
 };
 
-const computedBorderStyle = window.getComputedStyle(document.querySelector('.cell')).border;
+const computedBorderStyle = window.getComputedStyle(document.querySelector('.cell')).border; // Stores the border style of the cells
 function toggleGrid() {
     let cells = grid.querySelectorAll('.cell');
 
@@ -182,6 +193,7 @@ function pickBackgroundColor() {
     grid.style.backgroundColor = brushColor;
 };
 
+// Creates Buttons (dyanmic)
 function createColorButton(name, parentDiv = section2) {
 
     const button = document.createElement('button');
@@ -190,24 +202,27 @@ function createColorButton(name, parentDiv = section2) {
     parentDiv.appendChild(button);
 };
 
-
+// Create buttons based on names in buttonNames array and assign them specific locations in the HTML.
 const buttonNames = ['Clear', 'Toggle-Grid', 'Rainbow', 'Grayscale', 'Eraser', 'Color', 'Bg-Color'];
 buttonNames.forEach(name => {
     if (name === 'Clear' || name === 'Toggle-Grid') {
         createColorButton(name, bubble1); 
     } 
+
     else if (name === 'Rainbow' || name === 'Grayscale' || name === 'Eraser') {
         createColorButton(name, bubble2); 
     }
+
     else if (name === 'Color' || name === 'Bg-Color') {
         createColorButton(name, bubble3Box); 
     }
+
     else {
         createColorButton(name);  
-}
+    };
 });
 
-
+// Standard Color Brush Buttons
 const rainbowButton = document.getElementById('rainbow-button');
 const greyscaleButton = document.getElementById('grayscale-button');
 const eraserButton = document.getElementById('eraser-button');
@@ -217,6 +232,7 @@ const clearButton = document.getElementById('clear-button');
 const toggleGridButton = document.getElementById('toggle-grid-button');
 const bgColorButton = document.getElementById('bg-color-button');
 
+// Removes the click class from the 4 standard color buttons (only one color can be selected for this css style at a time)
 function removeClickedClassFromAll() {
     rainbowButton.classList.remove("clicked");
     greyscaleButton.classList.remove("clicked");
@@ -231,7 +247,7 @@ rainbowButton.addEventListener('click', function() {
     this.classList.toggle("clicked");
 });
 
-rainbowButton.classList.add("clicked");
+rainbowButton.classList.add("clicked"); // For css styling (default)
 
 greyscaleButton.addEventListener('click', function() {
     updateCellsForColor(colorFunctions.grayscale);
@@ -266,31 +282,66 @@ bgColorButton.addEventListener('click', function() {
     pickBackgroundColor();
 });
 
+// Colors the cell base on the brush selected (Handles both mouse & touch interactions)
 function updateCellsForColor(colorFunction) {
     const cellColor = document.querySelectorAll('.cell');
     let isDragging = false;
+    const touchedCells = new Set();
 
     function handleMouseEvent(event) {
-
         if (event.type === 'mousedown') {
             isDragging = true;
             colorFunction(event);
         } 
-
         else if (event.type === 'mouseup') {
             isDragging = false;
-        }
-
+        } 
         else if (event.type === 'mouseover' && isDragging) {
             colorFunction(event);
         };
     };
+  
+    function handleTouchEvent(event) {
+        event.preventDefault();
+
+        // Get the target element of the touch event
+        const targetElement = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
+
+        // Checks if target element exists and is a .cell element
+        if (targetElement && targetElement.classList.contains('cell')) {
+   
+            if (!touchedCells.has(targetElement)) { // Checks to see if the cell has been touch yet
+
+                colorFunction({ target: targetElement }); 
+                touchedCells.add(targetElement);  // Add the cell to the set of touched cells
+            };
+
+            if (event.type === 'touchstart') {
+                isDragging = true;
+            } 
+            else if (event.type === 'touchend') {
+                isDragging = false;
+            };
+        };
+    };
+
+    // Reset dragging state and touched cells when touch ends
+    function handleTouchEnd() {
+        isDragging = false;
+        touchedCells.clear();
+    };
     
     cellColor.forEach(cell => {
+        // Mouse event listeners
         cell.addEventListener('mousedown', handleMouseEvent);
         cell.addEventListener('mouseover', handleMouseEvent);
         cell.addEventListener('mouseup', handleMouseEvent);
+
+        // Touch event listeners
+        cell.addEventListener('touchstart', handleTouchEvent);
+        cell.addEventListener('touchmove', handleTouchEvent);
+        cell.addEventListener('touchend', handleTouchEnd);
     });
 };
 
-updateCellsForColor(colorFunctions.rainbow);
+updateCellsForColor(colorFunctions.rainbow); // Default brush color
