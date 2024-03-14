@@ -34,9 +34,17 @@ body {
 }
 
 .cell, .cell-color-box {
-    border: black solid .5px;
     flex: 1 auto;
 }
+
+.cell-color-box {
+    border: black solid .5px;
+}
+
+.cell-with-border {
+    border: black solid .5px;
+}
+
 
 .one {
     display: flex;

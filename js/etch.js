@@ -64,6 +64,7 @@ function createGrid(num) {
             for (let j = 0; j < num; j++) {
                 const cell = document.createElement('div');
                 cell.classList = 'cell';
+                cell.classList.add('cell-with-border');
                 row.appendChild(cell);
             };
         };
@@ -174,19 +175,20 @@ function clearScreen() {
     });
 };
 
-const computedBorderStyle = window.getComputedStyle(document.querySelector('.cell')).border; // Stores the border style of the cells
+const computedBorderStyle = window.getComputedStyle(document.querySelector('.cell')).border;
 function toggleGrid() {
     let cells = grid.querySelectorAll('.cell');
 
     cells.forEach(function(cell) {
-
-        if (cell.style.border === 'none') {
-            cell.style.border = computedBorderStyle;
+        if (cell.classList.contains('cell-with-border')) {
+            cell.classList.remove('cell-with-border');
         } 
+
         else {
-            cell.style.border = 'none';
+            cell.classList.add('cell-with-border');
         };
     });
+    console.log('Fin')
 };
 
 function pickBackgroundColor() {
