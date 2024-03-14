@@ -2,6 +2,9 @@
 
 This project is a tool that allows you to create pixel art on a grid canvas. 
 
+## Website
+https://naomih0.github.io/pixel-art-maker/ 
+
 ## Features
 - Brushes: Choose from four different brushes!
   * Rainbow Brush: Random vibrant rainbow shades
