@@ -31,6 +31,11 @@ function checkNumber(num) {
         return 'No';
     }
 
+    else if (isNaN(num)) {
+        alert('Not a number....Pick a number between 0-100');
+        return 'No';
+    }
+
     else {
         // If yes, then removes old grid so new grid can replace
         let removeRow = document.querySelectorAll('.row');
